@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 // hashes password
 import bcrypt from 'bcrypt'
 // JWT token to store info about user, user permissions, etc.
@@ -15,13 +16,14 @@ import prisma from '../../lib/prisma'
 // if successful we retrieve a cookie, the cookie is sent on every other request to verify user 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const salt = bcrypt.genSaltSync()
-  const { email, password } = req.body
+  const { email, password, username } = req.body
 
-  let user
+  let user: { email: any; id: any; first_name?: string; last_name?: string; username?: string; password?: string; city?: string; state?: string; image?: string; resetPasswordToken?: string; resetPasswordExpires?: Date; createdAt?: Date; updatedAt?: Date }
 
   try {
-    user = await prisma.user.create({
+    user = await prisma.users.create({
       data: {
+        username,
         email,
         password: bcrypt.hashSync(password, salt),
       },
