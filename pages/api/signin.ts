@@ -14,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const user = await prisma.users.findUnique({
     where: {
-  x
+      email,
     },   
   })
 
