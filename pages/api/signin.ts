@@ -4,19 +4,25 @@ import cookie from 'cookie'
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../lib/prisma'
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { email, password } = req.body
+// checking email to see if one in DB already 
+// check against the hash passwords, see if they're the same user. 
+// if so, sign user in
 
-  const user = await prisma.user.findUnique({
+// eslint-disable-next-line import/no-anonymous-default-export
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const { username, email, password} = req.body
+
+  const user = await prisma.users.findUnique({
     where: {
-      email,
-    },
+  x
+    },   
   })
 
   if (user && bcrypt.compareSync(password, user.password)) {
     const token = jwt.sign(
       {
         id: user.id,
+        username:user.username,
         email: user.email,
         time: Date.now(),
       },

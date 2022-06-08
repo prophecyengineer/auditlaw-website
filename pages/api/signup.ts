@@ -8,6 +8,13 @@ import cookie from 'cookie'
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../lib/prisma'
 
+// const client = stream.connect(
+//   process.env.STREAM_API_KEY,
+//   process.env.STREAM_KEY_SECRET,
+//   process.env.STREAM_APP_ID,
+//   { location: 'us-east' },
+// );
+
 // this is a serverless function (a function exectuted by some event)
 // function will start up and then shut down when the event is triggered
 
@@ -18,7 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const salt = bcrypt.genSaltSync()
   const { email, password, username } = req.body
 
-  let user: { email: any; id: any; first_name?: string; last_name?: string; username?: string; password?: string; city?: string; state?: string; image?: string; resetPasswordToken?: string; resetPasswordExpires?: Date; createdAt?: Date; updatedAt?: Date }
+  let user
 
   try {
     user = await prisma.users.create({
@@ -44,6 +51,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     'hello',
     { expiresIn: '8h' }
   )
+
+
 
   // set jwt on a cookie, gets set into the persons browser -not local storage
   res.setHeader(

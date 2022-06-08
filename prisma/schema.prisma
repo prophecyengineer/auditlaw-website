@@ -7,80 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Adventure_companies {
-  id            Int            @id @default(autoincrement())
-  name          String?        @db.VarChar(255)
-  address_1     String?        @db.VarChar(255)
-  address_2     String?        @db.VarChar(255)
-  city          String?        @db.VarChar(255)
-  state         String?        @db.VarChar(255)
-  zip_code      Int?
-  phone         BigInt?
-  email         String?        @db.VarChar(255)
-  website       String?        @db.VarChar(255)
-  description   String?        @db.Text
-  image         String?        @db.VarChar(255)
-  createdAt     DateTime       @default(now()) @db.Timestamp(0)
-  updatedAt     DateTime       @default(now()) @db.Timestamp(0)
-  CompanyUserId Int?
-  Company_users Company_users? @relation(fields: [CompanyUserId], references: [id], map: "adventure_companies_ibfk_1")
-  Adventures    Adventures[]
-
-  @@index([CompanyUserId], map: "CompanyUserId")
-}
-
-model Adventure_ratings {
-  id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now()) @db.Timestamp(0)
-  updatedAt   DateTime   @default(now()) @db.Timestamp(0)
-  AdventureId Int
-  UserId      Int
-  Adventures  Adventures @relation(fields: [AdventureId], references: [id], onDelete: Cascade, map: "adventure_ratings_ibfk_1")
-  Users       Users      @relation(fields: [UserId], references: [id], onDelete: NoAction, map: "adventure_ratings_ibfk_2")
-
-  @@index([AdventureId], map: "AdventureId")
-  @@index([UserId], map: "UserId")
-}
-
-model Adventures {
-  id                  Int                  @id @default(autoincrement())
-  name                String               @db.VarChar(255)
-  description         String               @db.Text
-  image               String               @db.VarChar(255)
-  longitude           Float?               @db.Float
-  latitude            Float?               @db.Float
-  createdAt           DateTime             @default(now()) @db.Timestamp(0)
-  updatedAt           DateTime             @default(now()) @db.Timestamp(0)
-  AdventureCompanyId  Int?
-  Adventure_companies Adventure_companies? @relation(fields: [AdventureCompanyId], references: [id], map: "adventures_ibfk_1")
-  Adventure_ratings   Adventure_ratings[]
-  tags_adventures     tags_adventures[]
-
-  @@index([AdventureCompanyId], map: "AdventureCompanyId")
-}
-
-model Company_users {
-  id                  Int                   @id @default(autoincrement())
-  username            String                @db.VarChar(255)
-  password            String                @db.VarChar(255)
-  email               String                @db.Text
-  createdAt           DateTime              @default(now()) @db.Timestamp(0)
-  updatedAt           DateTime              @default(now()) @db.Timestamp(0)
-  Adventure_companies Adventure_companies[]
-}
-
-model Incidents {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
-  description String   @db.Text
-  image       String   @db.VarChar(255)
-  createdAt   DateTime @default(now()) @db.Timestamp(0)
-  updatedAt   DateTime @default(now()) @db.Timestamp(0)
-  UserId      Int?
-  Users       Users?   @relation(fields: [UserId], references: [id], map: "incidents_ibfk_1")
-
-  @@index([UserId], map: "UserId")
-}
 
 model Post_ratings {
   id        Int      @id @default(autoincrement())
@@ -109,44 +35,22 @@ model Posts {
   @@index([UserId], map: "UserId")
 }
 
-model Tags {
-  id              Int               @id @default(autoincrement())
-  name            String            @db.VarChar(255)
-  description     String?           @db.Text
-  image           String?           @db.VarChar(255)
-  createdAt       DateTime          @default(now()) @db.Timestamp(0)
-  updatedAt       DateTime          @default(now()) @db.Timestamp(0)
-  tags_adventures tags_adventures[]
-}
 
 model Users {
   id                   Int                 @id @default(autoincrement())
-  first_name           String?             @db.VarChar(255)
-  last_name            String?             @db.VarChar(255)
-  email                String              @db.VarChar(255)
-  username             String              @db.VarChar(255)
+  email                String @unique
+  username             String @unique
   password             String              @db.VarChar(255)
+  first_name            String?             @db.VarChar(255)
+  last_name            String?             @db.VarChar(255)
   city                 String?             @default("Somewhere") @db.VarChar(255)
-  state                String?             @default("US") @db.VarChar(255)
-  image                String?             @default("minnesvart/anonymous-gender-neutral-face-avatar-incognito-head-silhouette-vector-id1220827245_m1ehe7") @db.VarChar(255)
+  country              String?             @default("United Kingdom") @db.VarChar(255)
+  image                String?             @default("http://placekitten.com/g/200/300") @db.VarChar(255)
   resetPasswordToken   String?             @db.VarChar(255)
   resetPasswordExpires DateTime?           @db.DateTime(0)
   createdAt            DateTime            @default(now()) @db.Timestamp(0)
   updatedAt            DateTime            @default(now()) @db.Timestamp(0)
-  Adventure_ratings    Adventure_ratings[]
-  Incidents            Incidents[]
   Post_ratings         Post_ratings[]
   Posts                Posts[]
 }
 
-model tags_adventures {
-  createdAt   DateTime   @db.DateTime(0)
-  updatedAt   DateTime   @db.DateTime(0)
-  AdventureId Int
-  TagId       Int
-  Adventures  Adventures @relation(fields: [AdventureId], references: [id], onDelete: Cascade, map: "tags_adventures_ibfk_1")
-  Tags        Tags       @relation(fields: [TagId], references: [id], onDelete: Cascade, map: "tags_adventures_ibfk_2")
-
-  @@id([AdventureId, TagId])
-  @@index([TagId], map: "TagId")
-}
