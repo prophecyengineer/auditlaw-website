@@ -44,7 +44,7 @@ model Users {
   first_name            String?             @db.VarChar(255)
   last_name            String?             @db.VarChar(255)
   city                 String?             @default("Somewhere") @db.VarChar(255)
-  country              String?             @default("United Kingdom") @db.VarChar(255)
+  country              String?             @default("Earth") @db.VarChar(255)
   image                String?             @default("http://placekitten.com/g/200/300") @db.VarChar(255)
   resetPasswordToken   String?             @db.VarChar(255)
   resetPasswordExpires DateTime?           @db.DateTime(0)

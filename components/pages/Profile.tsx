@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Card from '../ui/Card';
-
+import SignUp from './SignUp';
+import SignIn from './SignIn';
 import {
   IonPage,
   IonHeader,
@@ -11,6 +12,7 @@ import {
   IonIcon,
   IonContent,
   IonMenuButton,
+  IonItem
 } from '@ionic/react';
 import Notifications from './Notifications';
 import { useState } from 'react';
@@ -62,11 +64,23 @@ const Profile = () => {
             <IonTitle size="large">Profile</IonTitle>
           </IonToolbar>
         </IonHeader>
+        
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
-        {homeItems.map((i, index) => (
-          <FeedCard {...i} key={index} />
-        ))}
+     
+       
+
+       
       </IonContent>
+      <IonContent>
+    
+      <SignIn/>
+     
+     </IonContent>
+     <IonContent>
+    
+      <SignUp/>
+     
+     </IonContent>
     </IonPage>
   );
 };

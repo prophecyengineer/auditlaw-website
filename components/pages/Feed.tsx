@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Card from '../ui/Card';
-
 import {
   IonPage,
   IonHeader,
@@ -46,6 +45,7 @@ const Feed = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Home Feed</IonTitle>
+    
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>

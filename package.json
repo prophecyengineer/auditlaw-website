@@ -23,6 +23,7 @@
     "@types/next": "^9.0.0",
     "@types/node": "^17.0.41",
     "autoprefixer": "^10.2.6",
+    "babel-plugin-superjson-next": "^0.4.3",
     "bcrypt": "^5.0.1",
     "classnames": "^2.2.6",
     "cookie": "^0.5.0",
