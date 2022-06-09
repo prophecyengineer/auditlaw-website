@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Post_ratings {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now()) @db.Timestamp(0)
@@ -35,22 +34,20 @@ model Posts {
   @@index([UserId], map: "UserId")
 }
 
-
 model Users {
-  id                   Int                 @id @default(autoincrement())
-  email                String @unique
-  username             String @unique
-  password             String              @db.VarChar(255)
-  first_name            String?             @db.VarChar(255)
-  last_name            String?             @db.VarChar(255)
-  city                 String?             @default("Somewhere") @db.VarChar(255)
-  country              String?             @default("Earth") @db.VarChar(255)
-  image                String?             @default("http://placekitten.com/g/200/300") @db.VarChar(255)
-  resetPasswordToken   String?             @db.VarChar(255)
-  resetPasswordExpires DateTime?           @db.DateTime(0)
-  createdAt            DateTime            @default(now()) @db.Timestamp(0)
-  updatedAt            DateTime            @default(now()) @db.Timestamp(0)
+  id                   Int            @id @default(autoincrement())
+  email                String         @unique
+  username             String         @unique
+  password             String         @db.VarChar(255)
+  first_name           String?        @db.VarChar(255)
+  last_name            String?        @db.VarChar(255)
+  city                 String?        @default("Somewhere") @db.VarChar(255)
+  country              String?        @default("United Kingdom") @db.VarChar(255)
+  image                String?        @default("http://placekitten.com/g/200/300") @db.VarChar(255)
+  resetPasswordToken   String?        @db.VarChar(255)
+  resetPasswordExpires DateTime?      @db.DateTime(0)
+  createdAt            DateTime       @default(now()) @db.Timestamp(0)
+  updatedAt            DateTime       @default(now()) @db.Timestamp(0)
   Post_ratings         Post_ratings[]
   Posts                Posts[]
 }
-

@@ -16,14 +16,13 @@ import '../styles/variables.css';
 function MyApp({ Component, pageProps }) {
   return (
     <>
-     <Component {...pageProps} />
-
+    <Component {...pageProps} />
    {/* {Component.authPage ? (
           <Component {...pageProps} />
         ) : (
           
             <Component {...pageProps} />
-        
+          </PlayerLayout>
         )} */}
     
     </>

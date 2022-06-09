@@ -1,14 +1,14 @@
-import { IonPage } from "@ionic/react";
-import AuthForm from "../authForm";
-
+import { IonPage } from '@ionic/react';
+import AuthForm from '../authForm';
 
 const SignUp = () => {
-    return (
-        <IonPage>
-            <AuthForm mode="signup"/>
-            </IonPage>)
-}
+  return (
+    <IonPage>
+      <AuthForm mode="signup" />
+    </IonPage>
+  );
+};
 
-SignUp.authPage = true
+SignUp.authPage = true;
 
-export default SignUp
+export default SignUp;

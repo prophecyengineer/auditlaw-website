@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Card from '../ui/Card';
-import SignUp from './SignUp';
-import SignIn from './SignIn';
+
 import {
   IonPage,
   IonHeader,
@@ -71,16 +70,7 @@ const Profile = () => {
 
        
       </IonContent>
-      <IonContent>
     
-      <SignIn/>
-     
-     </IonContent>
-     <IonContent>
-    
-      <SignUp/>
-     
-     </IonContent>
     </IonPage>
   );
 };

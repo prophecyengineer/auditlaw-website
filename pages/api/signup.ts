@@ -1,32 +1,25 @@
-/* eslint-disable import/no-anonymous-default-export */
 // hashes password
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 // JWT token to store info about user, user permissions, etc.
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 // store memory in browser session
-import cookie from 'cookie'
-import { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../lib/prisma'
-
-// const client = stream.connect(
-//   process.env.STREAM_API_KEY,
-//   process.env.STREAM_KEY_SECRET,
-//   process.env.STREAM_APP_ID,
-//   { location: 'us-east' },
-// );
+import cookie from 'cookie';
+import { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '../../lib/prisma';
 
 // this is a serverless function (a function exectuted by some event)
 // function will start up and then shut down when the event is triggered
 
-// user sends us email and pass, we attempt to create new user in db 
+// user sends us email and pass, we attempt to create new user in db
 // if user exists, we return error
-// if successful we retrieve a cookie, the cookie is sent on every other request to verify user 
+// if successful we retrieve a cookie, the cookie is sent on every other request to verify user
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const salt = bcrypt.genSaltSync()
-  const { email, password, username } = req.body
+  const salt = bcrypt.genSaltSync();
+  const { username, email, password } = req.body;
 
-  let user
-
+  let user;
+  console.log({ username, email, password });
   try {
     user = await prisma.users.create({
       data: {
@@ -34,11 +27,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         email,
         password: bcrypt.hashSync(password, salt),
       },
-    })
+    });
   } catch (e) {
-    res.status(401)
-    res.json({ error: 'User already exists' })
-    return
+    res.status(401);
+    res.json({ error: e });
+    return;
   }
 
   // the object that you want to hash
@@ -50,9 +43,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     },
     'hello',
     { expiresIn: '8h' }
-  )
-
-
+  );
 
   // set jwt on a cookie, gets set into the persons browser -not local storage
   res.setHeader(
@@ -64,7 +55,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
     })
-  )
+  );
 
-  res.json(user)
-}
+  res.json(user);
+};
